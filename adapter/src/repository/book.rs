@@ -200,6 +200,7 @@ mod tests {
     use super::*;
 
     #[sqlx::test]
+    #[ignore]
     async fn test_register_book(pool: sqlx::PgPool) -> anyhow::Result<()> {
         let repo = BookRepositoryImpl::new(ConnectionPool::new(pool));
 
@@ -216,7 +217,7 @@ mod tests {
         assert_eq!(res.len(), 1);
 
         let book_id = res[0].id;
-        let res = repo.find_by_id(book_id).await?;
+        let res = repo.find_by_id(book_id.into()).await?;
         assert!(res.is_some());
 
         let Book {

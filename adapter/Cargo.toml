@@ -6,6 +6,8 @@ edition = "2021"
 [dependencies]
 kernel.workspace = true
 shared.workspace = true
+redis.workspace = true 
+bcrypt.workspace = true
 async-trait.workspace = true
 derive-new.workspace = true
 anyhow.workspace = true

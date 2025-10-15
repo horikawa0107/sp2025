@@ -1,6 +1,10 @@
 use super::user::BookOwner;
+use super::user::CheckoutUser;
+use chrono::{DateTime, Utc};
 use derive_new::new;
 use garde::Validate;
+use kernel::model::book::Checkout;
+use kernel::model::id::CheckoutId;
 use kernel::model::{
     book::{
         event::{CreateBook, UpdateBook},
@@ -119,6 +123,7 @@ pub struct BookResponse {
     pub isbn: String,
     pub description: String,
     pub owner: BookOwner,
+    pub checkout: Option<BookCheckoutResponse>,
 }
 impl From<Book> for BookResponse {
     fn from(value: Book) -> Self {
@@ -129,6 +134,7 @@ impl From<Book> for BookResponse {
             isbn,
             description,
             owner,
+            checkout,
         } = value;
         Self {
             id,
@@ -137,6 +143,7 @@ impl From<Book> for BookResponse {
             isbn,
             description,
             owner: owner.into(),
+            checkout: checkout.map(BookCheckoutResponse::from),
         }
     }
 }
@@ -166,6 +173,30 @@ impl From<PaginatedList<Book>> for PaginatedBookResponse {
             limit,
             offset,
             items: items.into_iter().map(BookResponse::from).collect(),
+        }
+    }
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BookCheckoutResponse {
+    pub id: CheckoutId,
+    pub checked_out_by: CheckoutUser,
+    pub checked_out_at: DateTime<Utc>,
+}
+
+impl From<Checkout> for BookCheckoutResponse {
+    fn from(value: Checkout) -> Self {
+        let Checkout {
+            checkout_id,
+            checked_out_by,
+            checked_out_at,
+        } = value;
+        Self {
+            id: checkout_id,
+            checked_out_by: checked_out_by.into(),
+
+            checked_out_at,
         }
     }
 }

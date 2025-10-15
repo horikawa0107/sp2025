@@ -10,7 +10,6 @@ use kernel::model::user::{
 use kernel::repository::user::UserRepository;
 use shared::error::{AppError, AppResult};
 
-
 #[derive(new)]
 pub struct UserRepositoryImpl {
     db: ConnectionPool,

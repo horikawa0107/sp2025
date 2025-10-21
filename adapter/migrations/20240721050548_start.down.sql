@@ -1,6 +1,6 @@
 -- -- Add down migration script here
--- DROP TABLE IF EXISTS returned_checkouts;
--- DROP TABLE IF EXISTS checkouts;
+DROP TABLE IF EXISTS returned_checkouts;
+DROP TABLE IF EXISTS checkouts;
 
 -- Add down migration script here
 DROP TRIGGER IF EXISTS books_updated_at_trigger ON books;

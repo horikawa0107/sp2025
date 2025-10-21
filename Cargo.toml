@@ -71,6 +71,7 @@ tracing-opentelemetry = "0.22.0"
 opentelemetry-jaeger = { version = "0.20.0", features = ["rt-tokio"] }
 bcrypt.workspace = true
 redis.workspace = true
+chrono.workspace = true
 
 [profile.dev.package.sqlx-macros]
 opt-level = 3
